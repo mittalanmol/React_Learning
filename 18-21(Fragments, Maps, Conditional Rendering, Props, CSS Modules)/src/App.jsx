@@ -11,7 +11,7 @@ function App() {
   return (
     // <> This is called React Fragments. We are using this to wrap our content and to prevent the use of unnecessary node
     <>
-      <h1>Healthy Food</h1>
+      <h1 className="food-heading" >Healthy Food</h1>
       <ErrorMessage foodItems={foodItems} ></ErrorMessage>
       <FoodItems foodItems={foodItems} ></FoodItems>
 
