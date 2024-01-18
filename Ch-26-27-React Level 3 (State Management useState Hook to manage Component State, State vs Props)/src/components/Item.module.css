@@ -1,0 +1,16 @@
+/* For Module CSS file name should be same as the file for which we want module CSS */
+/* That's why Item.module.css */
+
+.my-item {
+    background-color: khaki;
+
+}
+
+.my-span {
+    font-weight: 500;
+    color: orange;
+}
+
+.button {
+    float: right;
+}
