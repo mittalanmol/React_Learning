@@ -1,8 +1,16 @@
 import React from 'react'
 import Item from './Item'
+import { useState } from 'react';
 
 // we could have used props as an argument here but we are destructuring the array and writing the variable directly inside the {}
 function FoodItems({ foodItems }) {
+
+    let [activeItems, setActiveItems] = useState([]);
+
+    let onBuyButton = (item, event) => {  // passed item as an argument bcz item is fetching from below map
+        let newItems = [...activeItems, item];
+        setActiveItems(newItems);
+    }
 
     return (
         <ul className="list-group">
@@ -10,7 +18,8 @@ function FoodItems({ foodItems }) {
                 return <Item
                     key={item}
                     Items={item}
-                    handleBuyButtonClicked={() => console.log(`${item} is bought.`)}
+                    bought={activeItems.includes(item)}
+                    handleBuyButtonClicked={(event) => onBuyButton(item,event)}
                 ></Item>  // here item is an object so we are passing it inside {} rather than ""
             })}
         </ul >
