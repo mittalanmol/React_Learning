@@ -7,9 +7,13 @@ function FoodItems({ foodItems }) {
     return (
         <ul className="list-group">
             {foodItems.map((item) => {
-                return <Item key={item} Items={item} ></Item>  // here item is an object so we are passing it inside {} rather than ""
+                return <Item
+                    key={item}
+                    Items={item}
+                    handleBuyButtonClicked={() => console.log(`${item} is bought.`)}
+                ></Item>  // here item is an object so we are passing it inside {} rather than ""
             })}
-        </ul>
+        </ul >
     )
 }
 
