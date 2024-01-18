@@ -4,6 +4,7 @@ import FoodItems from "./components/FoodItems";
 import Container from "./components/Container";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import FoodInput from "./components/FoodInput";
 
 function App() {
   // let foodItems = []
@@ -14,6 +15,7 @@ function App() {
     <Container>
       <h1 className="food-heading" >Healthy Food</h1>
       <ErrorMessage foodItems={foodItems} ></ErrorMessage>
+      <FoodInput></FoodInput>
       <FoodItems foodItems={foodItems} ></FoodItems>
     </Container>
   );
