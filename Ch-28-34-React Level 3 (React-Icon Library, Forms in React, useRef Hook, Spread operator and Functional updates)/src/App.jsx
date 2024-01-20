@@ -12,14 +12,17 @@ function App() {
 
   const [todoItems, setTodoItems] = useState([]);
 
-  const handleNewItem = (itemName,itemDueDate) => {
-    console.log(`New Item Added: ${itemName} Date:${itemDueDate}`);
-    const newTodoItems = [
-      ...todoItems,
-      { name: itemName, dueDate: itemDueDate, }
-    ]
-    setTodoItems(newTodoItems)
-  }
+  const handleNewItem = (itemName, itemDueDate) => {
+    
+    setTodoItems((currVal) => {  // we are passing the currval instead of todoItems
+      const newTodoItems = [
+        ...currVal,
+        { name: itemName, dueDate: itemDueDate, }
+      ];
+      return newTodoItems;
+    });
+  };
+  // Functional Updates: Use to avoid stale values during asynchronous updates.
 
   const handleDeleteClick = (todoName) => {
     const newTodoItems = todoItems.filter((item) => item.name !== todoName)
