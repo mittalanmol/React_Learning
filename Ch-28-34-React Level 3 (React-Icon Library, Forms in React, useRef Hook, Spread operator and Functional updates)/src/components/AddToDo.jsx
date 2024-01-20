@@ -1,44 +1,44 @@
-import { useState } from "react"
+import { useRef, useState } from "react";
 import { IoIosAddCircle } from "react-icons/io";
 
-
 function AddToDo({ onNewItem }) {
-    
-    const [todoName, setTodoName] = useState("") //we have defined initial value as empty
-    const [dueDate, setDueDate] = useState("")
+    const todoNameElement = useRef();
+    const dueDateElement = useRef()
 
-    const handleNameChange = (event) => {
-        setTodoName(event.target.value)
-    }
 
-    const handleDateChange = (event) => {
-        setDueDate(event.target.value)
-    }
+  const handleAddButtonCLick = () => {
+      event.preventDefault() // preventing the default behaviour of submit button (to send data to server)
+      const todoName = todoNameElement.current.value;
+      const dueDate = dueDateElement.current.value;
+      todoNameElement.current.value = "";//Emptying the value (the input text)
+      dueDateElement.current.value = "";
+      onNewItem(todoName,dueDate)
+  };
 
-    const handleAddButtonCLick = () => {
-        onNewItem(todoName, dueDate)
-        setDueDate(""); // after sending the value emptying it to the initial placeholder so that we can store the next value 
-        setTodoName(""); // don't write " " as it will pass an empty space
-    }
-
-    return (
-        <div className="container text-center">
-            <div className="row my-row">
-                <div className="col-6">
-                    <input type="text" placeholder="Enter Todo Here" value={todoName} onChange={handleNameChange} />
-                </div>
-                <div className="col-4">
-                    <input type="date" value={dueDate} onChange={handleDateChange} />
-                </div>
-                <div className="col-2">
-                    <button type="button" className="btn btn-success my-button"  onClick={handleAddButtonCLick}>
-                    <IoIosAddCircle />
-
-                    </button>
-                </div>
-            </div>
+  return (
+    <div className="container text-center">
+      <form className="row my-row" onSubmit={handleAddButtonCLick} >
+        <div className="col-6">
+          <input
+            type="text"
+            placeholder="Enter Todo Here"
+            ref={todoNameElement}
+          />
         </div>
-    )
+        <div className="col-4">
+          <input type="date" ref={dueDateElement}/>
+        </div>
+        <div className="col-2">
+          <button
+            type="submit"  // the type of button is submit now
+            className="btn btn-success my-button"
+          >
+            <IoIosAddCircle />
+          </button>
+        </div>
+      </form>
+    </div>
+  );
 }
 
-export default AddToDo
+export default AddToDo;
