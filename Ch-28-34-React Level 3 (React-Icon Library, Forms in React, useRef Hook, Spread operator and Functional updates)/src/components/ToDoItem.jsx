@@ -1,3 +1,7 @@
+import { MdDelete } from "react-icons/md";
+
+// added react icon and used it instead of delete button
+
 function ToDoItem({ todoDate, todoName, onDeleteClick }) {
 
 // when there is a click on Delete button you have to return the todoName
@@ -8,7 +12,7 @@ function ToDoItem({ todoDate, todoName, onDeleteClick }) {
                 <div className="col-4 todoItems">{todoDate}</div>
                 <div className="col-2">
                     <button type="button" className="btn btn-danger my-button" onClick={()=>onDeleteClick(todoName)} > 
-                        Delete
+                        <MdDelete /> 
                     </button>
                 </div>
             </div>
