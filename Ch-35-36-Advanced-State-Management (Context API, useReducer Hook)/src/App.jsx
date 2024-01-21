@@ -2,29 +2,52 @@ import AppName from "./components/AppName";
 import AddToDo from "./components/AddToDo";
 import "./App.css";
 import ToDoItems from "./components/ToDoItems";
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import WelcomeMessage from "./components/WelcomeMessage";
 import { TodoItemsContext } from "./store/ToDo-Items-Store";
 
+const todoItemReducer = (currTodoItems, action) => {
+  let newTodoItems = currTodoItems;
+  // if there is no change tou currItem hi new item main store hoke return hojayegi aur agr changes honge to wo niche sort out ho hi jayege
+
+  if (action.type === "NEW_ITEM") {
+    // we are passing the currval instead of todoItems
+    // Functional Updates: Use to avoid stale values during asynchronous updates.
+    newTodoItems = [
+      ...currTodoItems,
+      { name: action.payload.itemName, dueDate: action.payload.itemDueDate },
+    ];
+  } else if (action.type === "DELETE_ITEM") {
+    newTodoItems = currTodoItems.filter(
+      (item) => item.name !== action.payload.itemName
+    );
+    // agar name ke equal nhi hai to usse store krlo newTodoItems main and delete mt kro as it is filtering out. And if equal hai to delete
+  }
+  return newTodoItems;
+};
+
 function App() {
-  const [todoItems, setTodoItems] = useState([]);
+  const [todoItems, dispatchTodoItems] = useReducer(todoItemReducer, []);
 
   const addNewItem = (itemName, itemDueDate) => {
-    setTodoItems((currVal) => {
-      // we are passing the currval instead of todoItems
-      const newTodoItems = [
-        ...currVal,
-        { name: itemName, dueDate: itemDueDate },
-      ];
-      return newTodoItems;
-    });
+    const newItemAction = {
+      type: "NEW_ITEM",
+      payload: {
+        itemName,
+        itemDueDate, // we have passed the same name as argument so no need to write is traditional wise like itemDueDate: itemDueDate
+      },
+    };
+    dispatchTodoItems(newItemAction);
   };
-  // Functional Updates: Use to avoid stale values during asynchronous updates.
 
   const deleteItem = (todoName) => {
-    const newTodoItems = todoItems.filter((item) => item.name !== todoName);
-    // agar name ke equal nhi hai to usse store krlo newTodoItems main and delete mt kro as it is filtering out. And if equal hai to delete
-    setTodoItems(newTodoItems);
+    const deleteItemAction = {
+      type: "DELETE_ITEM",
+      payload: {
+        itemName: todoName,
+      },
+    };
+    dispatchTodoItems(deleteItemAction);
   };
 
   return (
