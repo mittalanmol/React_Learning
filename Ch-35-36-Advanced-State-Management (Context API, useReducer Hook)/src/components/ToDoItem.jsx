@@ -1,9 +1,14 @@
+import { useContext } from "react";
 import { MdDelete } from "react-icons/md";
+import { TodoItemsContext } from "../store/ToDo-Items-Store";
 
 // added react icon and used it instead of delete button
 
-function ToDoItem({ todoDate, todoName, onDeleteClick }) {
+function ToDoItem({ todoDate, todoName }) {
   // when there is a click on Delete button you have to return the todoName
+
+  const { deleteItem } = useContext(TodoItemsContext);
+
   return (
     <div className="container">
       <div className="row my-row">
@@ -13,7 +18,7 @@ function ToDoItem({ todoDate, todoName, onDeleteClick }) {
           <button
             type="button"
             className="btn btn-danger my-button"
-            onClick={() => onDeleteClick(todoName)}
+            onClick={() => deleteItem(todoName)}
           >
             <MdDelete />
           </button>

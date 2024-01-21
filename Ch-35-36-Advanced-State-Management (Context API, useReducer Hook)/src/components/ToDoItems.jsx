@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import ToDoItem from "./ToDoItem";
+import { TodoItemsContext } from "../store/ToDo-Items-Store";
 
-function ToDoItems({ todoItems, onDeleteClick }) {
+function ToDoItems() {
+  const { todoItems } = useContext(TodoItemsContext); // here we are destructuring  the object
+
+  /* Traditional way of accesing element of object
+
+const contextObj = useContext(TodoItemsContext);
+const todoItems = contextObj.todoItems;
+*/
   return (
     <div className="itemContainer">
       {todoItems.map((item) => {
@@ -10,7 +18,6 @@ function ToDoItems({ todoItems, onDeleteClick }) {
             key={item.name}
             todoName={item.name}
             todoDate={item.dueDate}
-            onDeleteClick={onDeleteClick}
           ></ToDoItem>
         );
       })}
