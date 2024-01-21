@@ -1,0 +1,19 @@
+.todoItems {
+    text-align: left;
+}
+
+
+input {
+    width: 100%;
+    /* it will take the entire width of its parent container */
+}
+
+
+.my-button {
+    min-width: 80px;
+
+}
+
+.my-row {
+    margin: 10px 5px;
+}
