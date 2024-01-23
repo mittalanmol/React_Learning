@@ -12,13 +12,20 @@ const PostList = () => {
 
   // By use Effect we can reload the initial posts when the app starts
   useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
     setFetching(true); // true means humm fetch kr rhe hai
-    fetch("https://dummyjson.com/posts") // this is a dummy api from dummyjson.com
+    fetch("https://dummyjson.com/posts", { signal }) // this is a dummy api from dummyjson.com
       .then((res) => res.json())
       .then((data) => {
         addInitialPosts(data.posts); // we are getting array of posts from above promise so we deifned a new object named as data and fetching the posts
         setFetching(false);
       });
+
+    return () => {
+      controller.abort(); // agr meri api call ho rhi hai to use abort kr dena if I'm not at the page where I'm calling it.
+    };
   }, []); // this [] empty square brackets means we are fetching it for just one time when the app starts
 
   return (
