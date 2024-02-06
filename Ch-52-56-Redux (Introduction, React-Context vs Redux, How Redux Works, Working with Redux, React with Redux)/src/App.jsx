@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Controls from "./components/Controls";
 import DisplayCounter from "./components/DisplayCounter";
 import Header from "./components/Header";
-import { Children } from "react";
+
 import Container from "./components/Container";
 
 function App() {
