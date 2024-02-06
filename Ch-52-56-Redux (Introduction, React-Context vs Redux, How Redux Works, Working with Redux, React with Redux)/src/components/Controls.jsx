@@ -12,6 +12,10 @@ function Controls() {
     dispatch({ type: "DECREMENT" });
   };
 
+  const handlePrivacyToggle = () => {
+    dispatch({ type: "PRIVACY" });
+  };
+
   const handleAdd = () => {
     dispatch({
       type: "ADD",
@@ -48,6 +52,13 @@ function Controls() {
           onClick={handleDecrement}
         >
           -1
+        </button>
+        <button
+          type="button"
+          className="btn btn-warning"
+          onClick={handlePrivacyToggle}
+        >
+          Privacy Toggle
         </button>
       </div>
 
