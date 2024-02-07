@@ -1,36 +1,49 @@
-import { createStore } from "redux"; // this is unopmtimized way of using redux to handle store later we will use Redux Toolkit
+import { configureStore, createSlice } from "@reduxjs/toolkit";
 
-const INITIAL_VALUE = {
-  counter: 0,
-  privacy: false,
-};
+// we will create different number of slices and each slice ki apni fucntionalitty hogi
 
-const counterReducer = (store = INITIAL_VALUE, action) => {
-  if (action.type === "INCREMENT") {
-    return { ...store, counter: store.counter + 1 };
-  } // Now here we have to return both the values of store i.e counter and privacy otherwise functioning will disturbed so we gonna use rest operator
-  else if (action.type === "DECREMENT") {
-    return { ...store, counter: store.counter - 1 };
-  } else if (action.type === "ADD") {
-    return { ...store, counter: store.counter + Number(action.payload.num) }; // here we are converting the string into Number
-  } else if (action.type === "SUBTRACT") {
-    return { ...store, counter: store.counter - Number(action.payload.num) };
-  } else if (action.type === "PRIVACY") {
-    return { ...store, privacy: !store.privacy }; // if false then true
-  }
-  return store;
-};
+const counterSlice = createSlice({
+  name: "counter",
+  initialState: { counterVal: 0 }, // yha direct 0 bhi de skte hai humne as a object di hai value
+  reducers: {
+    increment: (state) => {
+      // yha action ki zrurat nhi thi
+      state.counterVal++;
+    },
 
-// As we can see the above code is clumsy now as we have to write the type name and also use spread operator that's why createStore is an unoptimized method. So we will use Redux Toolkit next
+    decrement: (state) => {
+      state.counterVal--;
+    },
+    add: (state, action) => {
+      state.counterVal += Number(action.payload.num); // here our arguent was an num object so .num
+    },
+    subtract: (state, action) => {
+      state.counterVal -= Number(action.payload);
+    },
+  },
+});
 
-const counterScore = createStore(counterReducer);
+const privacySlice = createSlice({
+  name: "privacy",
+  initialState: false,
+  reducers: {
+    toggle: (state) => {
+      return (state = !state); // ek expression ko by default return statement mann lete hai but here it is not expression so return used
+    },
+  },
+});
 
+// humne ek configure store bnaya uske andar we can pass any number of reducers
+
+const counterScore = configureStore({
+  reducer: {
+    counter: counterSlice.reducer,
+    privacy: privacySlice.reducer,
+  },
+});
+
+// har slice ka action hoga and we are passing them
+
+export const counterActions = counterSlice.actions;
+export const privacyActions = privacySlice.actions;
 export default counterScore;
-
-// The below give are main steps in using Redux
-
-// 1. phle createStore se ek store bnaliya
-// 2. phir store ke andar reducer pass kr diya
-// 3. jo store create kia usse Provider ki help se pass ke diya (in the given app we are using store in whole APP component to main main kiy)
-// 4. useSelector() ki help se store main se values fetch krli jab bhi store main changes hoge
-// 5. useDispatch() ki help se actions and payload pass krdiye

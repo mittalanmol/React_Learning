@@ -1,38 +1,33 @@
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
+import { counterActions, privacyActions } from "../store";
 function Controls() {
   const dispatch = useDispatch();
   const inputElement = useRef(); // it will store what we will write in input text
 
   const handleIncrement = () => {
-    dispatch({ type: "INCREMENT" });
+    dispatch(counterActions.increment());
   };
 
   const handleDecrement = () => {
-    dispatch({ type: "DECREMENT" });
+    dispatch(counterActions.decrement());
   };
 
   const handlePrivacyToggle = () => {
-    dispatch({ type: "PRIVACY" });
+    dispatch(privacyActions.toggle());
   };
 
   const handleAdd = () => {
-    dispatch({
-      type: "ADD",
-      payload: {
+    dispatch(
+      counterActions.add({
         num: inputElement.current.value,
-      },
-    });
+      })
+    ); // Passing the num object inside add
     inputElement.current.value = ""; // emptying the inputElement value after storing in num
   };
 
   const handleSubtract = () => {
-    dispatch({
-      type: "SUBTRACT",
-      payload: {
-        num: inputElement.current.value,
-      },
-    });
+    dispatch(counterActions.subtract(inputElement.current.value)); // here direct passing the input value not an object
     inputElement.current.value = "";
   };
 
